@@ -9,9 +9,10 @@
     tools:context=".MainActivity">
 
     <ImageView
+        android:contentDescription="@string/imagem_aleat_ria_de_um_cachorro"
         android:id="@+id/imageGenerated"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="400dp"
+        android:layout_height="400dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -22,7 +23,7 @@
         android:id="@+id/buttonGenerate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Gerar nova imagem"
+        android:text="@string/gerar_nova_imagem"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -32,9 +33,12 @@
         android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Gerador de Imagens"
+        android:fontFamily="casual"
+        android:text="@string/gerador_de_imagens_de_cachorrinhos"
+        android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/imageGenerated"
         app:layout_constraintEnd_toEndOf="@+id/imageGenerated"
+        app:layout_constraintHorizontal_bias="0.508"
         app:layout_constraintStart_toStartOf="@+id/imageGenerated"
         app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

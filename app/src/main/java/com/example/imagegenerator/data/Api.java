@@ -8,6 +8,6 @@ import retrofit2.http.GET;
 public interface Api {
 
 
-    @GET("/breeds/image/random")
-    Call<List<randomImage>> getRandomImages();
+    @GET("breeds/image/random")
+    Call<RandomImage> getRandomImage();
 }

@@ -4,14 +4,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
+import com.bumptech.glide.Glide;
 import com.example.imagegenerator.data.Api;
-import com.example.imagegenerator.data.randomImage;
+import com.example.imagegenerator.data.RandomImage;
 import com.example.imagegenerator.databinding.ActivityMainBinding;
 import com.google.android.material.snackbar.Snackbar;
-
-import java.util.List;
-import java.util.Random;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -31,44 +30,60 @@ public class MainActivity extends AppCompatActivity {
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        
-        setupImagesList();
-        setupBottonGenerate();
-        setupHttpClient();
 
-        int numero = new Random().nextInt(15);
+        setupHttpClient();
+        setupBottonGenerate();
+        setupImagesList();
+
+
     }
 
     private void setupHttpClient() {
+
+        //Recupera as imagens do site dog.ceo
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://dog.ceo/api/breeds/image/random")
+                .baseUrl("https://dog.ceo/api/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
         imagesApi = retrofit.create(Api.class);
     }
 
+    // Implementa botão para gerar nova imagem
     private void setupBottonGenerate() {
-        // implementar botão para gerar imagens aleatorias
+
+        //Evento de clique
+        binding.buttonGenerate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setupImagesList();
+            }
+        });
     }
 
-    private void setupImagesList() {
-        //mostrar as imagens consumindo a api
-        imagesApi.getRandomImages().enqueue(new Callback<List<randomImage>>() {
-            @Override
-            public void onResponse(Call<List<randomImage>> call, Response<List<randomImage>> response) {
-                if (response.isSuccessful()){
-                    List<randomImage> imagesR = response.body();
 
-                    //TODO apagar essa linha de baixo
-                    Log.i("imagemteste", "esta dando certo" + imagesR.size());
-                }else{
+    private void setupImagesList() {
+
+        //Recuperar imagens de forma aleátoria
+        imagesApi.getRandomImage().enqueue(new Callback<RandomImage>() {
+            @Override
+            public void onResponse(Call<RandomImage> call, Response<RandomImage> response) {
+                if (response.isSuccessful()) {
+                    RandomImage imagesR = response.body();
+
+                    //Desenha na tela as imagens a partir
+                    Glide.with(MainActivity.this).load(imagesR.getImage()).into(binding.imageGenerated);
+
+                    //Teste de recuperação de dados
+                    Log.i("imagemteste", "esta dando certo" + imagesR.getImage());
+
+                } else {
                     showErrorMessage();
                 }
             }
 
             @Override
-            public void onFailure(Call<List<randomImage>> call, Throwable t) {
+            public void onFailure(Call<RandomImage> call, Throwable t) {
                 showErrorMessage();
 
             }
@@ -76,6 +91,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void showErrorMessage() {
+        //Caso o telefone nao tenha acesso a internet, uma mensagem de erro será apresentada na tela
         Snackbar.make(binding.buttonGenerate, "Erro ao gerar imagem", Snackbar.LENGTH_LONG).show();
     }
 }

@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toolbar;
 
 import com.bumptech.glide.Glide;
 import com.example.imagegenerator.data.Api;
@@ -31,12 +32,20 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        //Toolbar para menus
+        androidx.appcompat.widget.Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+
+
+
         setupHttpClient();
         setupBottonGenerate();
         setupImagesList();
 
 
     }
+
 
     private void setupHttpClient() {
 
@@ -95,3 +104,4 @@ public class MainActivity extends AppCompatActivity {
         Snackbar.make(binding.buttonGenerate, "Erro ao gerar imagem", Snackbar.LENGTH_LONG).show();
     }
 }
+

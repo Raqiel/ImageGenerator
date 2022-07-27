@@ -8,7 +8,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toolbar;
 
 import com.bumptech.glide.Glide;
 import com.example.imagegenerator.data.Api;
@@ -27,6 +26,7 @@ public class MainActivity<onOptionsItemSelected> extends AppCompatActivity {
 
     private ActivityMainBinding binding;
     private Api imagesApi;
+    //private DataBaseReference reference = Firebase
 
 
     @Override
@@ -41,9 +41,12 @@ public class MainActivity<onOptionsItemSelected> extends AppCompatActivity {
 
 
 
+
+
+
         //Toolbar para menus
         androidx.appcompat.widget.Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+         setSupportActionBar(toolbar);
 
 
         setupHttpClient();

@@ -7,7 +7,6 @@ public class RandomImage {
 
     @SerializedName("message")
     private String Image;
-
     private int id;
     private boolean favorite;
 

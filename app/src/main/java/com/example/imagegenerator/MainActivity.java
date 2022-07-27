@@ -14,6 +14,8 @@ import com.example.imagegenerator.data.Api;
 import com.example.imagegenerator.data.RandomImage;
 import com.example.imagegenerator.databinding.ActivityMainBinding;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -26,71 +28,71 @@ public class MainActivity<onOptionsItemSelected> extends AppCompatActivity {
 
     private ActivityMainBinding binding;
     private Api imagesApi;
-    //private DataBaseReference reference = Firebase
+    private DatabaseReference referencia = FirebaseDatabase.getInstance().getReference();
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
 
+        /*
+        //firebase
+        RandomImage randomImagem = new RandomImage();
+        DatabaseReference imagem = referencia.child("imagem");
+
+        referencia.child("id").child("002").child("imagem").setValue("002");
 
 
+        randomImagem.setImage();
+        randomImagem.setId();
+        randomImagem.child("100").setValue(RandomImage);
 
-
+         */
 
 
         //Toolbar para menus
         androidx.appcompat.widget.Toolbar toolbar = findViewById(R.id.toolbar);
-         setSupportActionBar(toolbar);
+        setSupportActionBar(toolbar);
 
 
+        //metodos
         setupHttpClient();
         setupBottonGenerate();
         setupImagesList();
-
-
     }
 
+    //Menu opções
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-
         getMenuInflater().inflate(R.menu.menu_main_xml, menu);
-
         return super.onCreateOptionsMenu(menu);
     }
 
+    //quando clicar em opções-favoritos
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.favoritos:
                 //TODO mostrar a tela de favoritos
                 break;
-
         }
-
         return super.onOptionsItemSelected(item);
     }
 
+    //Recupera as imagens do site dog.ceo
     private void setupHttpClient() {
-
-        //Recupera as imagens do site dog.ceo
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://dog.ceo/api/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
-
         imagesApi = retrofit.create(Api.class);
     }
 
     // Implementa botão para gerar nova imagem
     private void setupBottonGenerate() {
-
-        //Evento de clique
         binding.buttonGenerate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -99,19 +101,14 @@ public class MainActivity<onOptionsItemSelected> extends AppCompatActivity {
         });
     }
 
-
+    //desenha as imagens recuperadas da api na tela
     private void setupImagesList() {
-
-        //Recuperar imagens de forma aleátoria
         imagesApi.getRandomImage().enqueue(new Callback<RandomImage>() {
             @Override
             public void onResponse(Call<RandomImage> call, Response<RandomImage> response) {
                 if (response.isSuccessful()) {
                     RandomImage imagesR = response.body();
-
-                    //Desenha na tela as imagens a partir
                     Glide.with(MainActivity.this).load(imagesR.getImage()).into(binding.imageGenerated);
-
                     //Teste de recuperação de dados
                     Log.i("imagemteste", "esta dando certo" + imagesR.getImage());
 
@@ -132,7 +129,6 @@ public class MainActivity<onOptionsItemSelected> extends AppCompatActivity {
         //Caso o telefone nao tenha acesso a internet, uma mensagem de erro será apresentada na tela
         Snackbar.make(binding.buttonGenerate, "Erro ao gerar imagem", Snackbar.LENGTH_LONG).show();
     }
-
 
 
 }

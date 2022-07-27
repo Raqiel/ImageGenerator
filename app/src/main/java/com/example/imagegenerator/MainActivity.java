@@ -1,5 +1,6 @@
 package com.example.imagegenerator;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
@@ -21,7 +22,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity<onOptionsItemSelected> extends AppCompatActivity {
 
 
     private ActivityMainBinding binding;
@@ -33,15 +34,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
 
-
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         //Toolbar para menus
         androidx.appcompat.widget.Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-
 
 
         setupHttpClient();
@@ -54,9 +52,23 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
-        getMenuInflater().inflate(R.menu.menu_main_xml,menu);
+        getMenuInflater().inflate(R.menu.menu_main_xml, menu);
 
         return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.favoritos:
+                //TODO mostrar a tela de favoritos
+                break;
+            case R.id.menu_save:
+                //TODO salvar a imagem da tela em uma room
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     private void setupHttpClient() {
@@ -116,26 +128,7 @@ public class MainActivity extends AppCompatActivity {
         Snackbar.make(binding.buttonGenerate, "Erro ao gerar imagem", Snackbar.LENGTH_LONG).show();
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
 
-            case R.id.action_menu:
-                // User chose the "Settings" item, show the app settings UI...
-                return true;
-
-            case R.id.action_favorite:
-                // User chose the "Favorite" action, mark the current item
-                // as a favorite...
-                return true;
-
-            default:
-                // If we got here, the user's action was not recognized.
-                // Invoke the superclass to handle it.
-                return super.onOptionsItemSelected(item);
-
-        }
-    }
 
 }
 

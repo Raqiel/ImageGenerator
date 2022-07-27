@@ -11,10 +11,11 @@
     </group>
 
 
-    <item android:id="@+id/menu_save"
-        android:icon="@drawable/ic_favorite_unclicked"
-         app:showAsAction="always"
-        android:title="@string/coracao_save" />
+    //item android:id="@+id/menu_save"
+        //android:icon="@drawable/ic_favorite_unclicked"
+         //app:showAsAction="always"
+       // android:title="@string/coracao_save" />
+
 
 
 </menu>

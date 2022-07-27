@@ -37,6 +37,10 @@ public class MainActivity<onOptionsItemSelected> extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+
+
+
+
         //Toolbar para menus
         androidx.appcompat.widget.Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -63,9 +67,7 @@ public class MainActivity<onOptionsItemSelected> extends AppCompatActivity {
             case R.id.favoritos:
                 //TODO mostrar a tela de favoritos
                 break;
-            case R.id.menu_save:
-                //TODO salvar a imagem da tela em uma room
-                break;
+
         }
 
         return super.onOptionsItemSelected(item);

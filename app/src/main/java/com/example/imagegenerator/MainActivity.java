@@ -74,7 +74,7 @@ public class MainActivity<onOptionsItemSelected> extends AppCompatActivity {
     }
 
 
-*/
+
 /*
     private void recuperarDados() {
         RandomImage randomImagem = new RandomImage();

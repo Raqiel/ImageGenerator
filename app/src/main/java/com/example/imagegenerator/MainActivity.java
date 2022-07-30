@@ -20,6 +20,10 @@ import com.example.imagegenerator.favoritos.Favoritos;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -32,9 +36,8 @@ public class MainActivity<onOptionsItemSelected> extends AppCompatActivity {
 
     private ActivityMainBinding binding;
     private Api imagesApi;
-    private DatabaseReference referencia = FirebaseDatabase.getInstance().getReference();
     private ImageView btCoracao;
-
+    private RandomImage imagesR;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,25 +56,29 @@ public class MainActivity<onOptionsItemSelected> extends AppCompatActivity {
         setupHttpClient();
         setupBottonGenerate();
         setupImagesList();
-        //setupButtonFavoriteCoracao();
+        setupButtonFavoriteCoracao();
 
 
     }
 
-/*
+
     //TODO salvar a imagem no banco de dados quando o usuario clicar no coraçao
     private void setupButtonFavoriteCoracao() {
         binding.coracao.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               recuperarDados();
+               // referencia.child("imagem").setValue(imagesR.getImage());
+                Map<String,String> image = new HashMap<>();
+                image.put("url", imagesR.getImage());
+                FirebaseFirestore.getInstance().collection("imagens").add(image);
+
+
 
             }
         });
-
-
-
     }
+
+
 
 
 
@@ -82,16 +89,14 @@ public class MainActivity<onOptionsItemSelected> extends AppCompatActivity {
     }
 
 
+ */
+
 
         //firebase
 
-        DatabaseReference imagem = referencia.child("imagem");
-        referencia.child("id").child("002").child("imagem").setValue("002");
-        randomImagem.setImage();
-        randomImagem.setId();
-        randomImagem.child("100").setValue(RandomImage);
 
-         */
+
+
 
     //Menu opções
     @Override
@@ -146,7 +151,7 @@ public class MainActivity<onOptionsItemSelected> extends AppCompatActivity {
             @Override
             public void onResponse(Call<RandomImage> call, Response<RandomImage> response) {
                 if (response.isSuccessful()) {
-                    RandomImage imagesR = response.body();
+                     imagesR = response.body();
                     Glide.with(MainActivity.this).load(imagesR.getImage()).into(binding.imageGenerated);
                     //Teste de recuperação de dados
                     Log.i("imagemteste", "esta dando certo" + imagesR.getImage());
@@ -165,6 +170,11 @@ public class MainActivity<onOptionsItemSelected> extends AppCompatActivity {
     private void showErrorMessage() {
         //Caso o telefone nao tenha acesso a internet, uma mensagem de erro será apresentada na tela
         Snackbar.make(binding.buttonGenerate, "Erro ao gerar imagem", Snackbar.LENGTH_LONG).show();
+    }
+
+    private void showSaveMessage() {
+        //quando o usuario clicar em favoritar, aparece uma mensagem de sucesso na tela
+        Snackbar.make(binding.coracao, "Imagem salva", Snackbar.LENGTH_LONG).show();
     }
 }
 

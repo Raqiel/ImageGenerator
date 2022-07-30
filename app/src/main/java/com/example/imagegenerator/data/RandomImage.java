@@ -7,24 +7,18 @@ public class RandomImage {
 
     @SerializedName("message")
     private String Image;
-    private int id;
-    private boolean favorite;
+    private String id;
 
-    public int getId() {
+
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
-    public boolean isFavorite() {
-        return favorite;
-    }
 
-    public void setFavorite(boolean favorite) {
-        this.favorite = favorite;
-    }
 
     public String getImage() {
         return Image;

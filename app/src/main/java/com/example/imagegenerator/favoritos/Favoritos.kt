@@ -35,31 +35,7 @@ class Favoritos : AppCompatActivity() {
     }
 
     private fun getImagesData() {
-//        dbref = FirebaseDatabase.getInstance().getReference("imagens")
-//
-//        dbref.addValueEventListener(object : ValueEventListener{
-//
-//            override fun onDataChange(snapshot: DataSnapshot) {
-//
-//                if (snapshot.exists()){
-//                    for (imagem in snapshot.children){
-//
-//                      //  val image = imagemSnapshot.getValue(User::class.java)
-//
-//                         val ri = imagem.getValue(RandomImage::class.java)
-//
-//
-//                        imagensArrayList.add(ri!!)
-//                    }
-//
-//                    imagensRecyclerView.adapter = ItemAdapter(imagensArrayList)
-//                }
-//            }
-//
-//            override fun onCancelled(error: DatabaseError) {
-//                TODO("Not yet implemented")
-//            }
-//        })
+
 
         FirebaseFirestore.getInstance().collection("imagens").get().addOnSuccessListener{
             imagensCollection ->

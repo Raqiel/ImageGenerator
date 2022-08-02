@@ -61,7 +61,8 @@
         app:layout_constraintStart_toStartOf="@+id/imageGenerated"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
+    <ImageButton
+        android:clickable="true"
         android:id="@+id/coracao"
         android:layout_width="30dp"
         android:layout_height="30dp"
@@ -69,7 +70,10 @@
         android:src="@drawable/ic_favorite_unclicked"
         app:layout_constraintBottom_toTopOf="@+id/imageGenerated"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        android:focusable="true" />
+
+
 
 
 

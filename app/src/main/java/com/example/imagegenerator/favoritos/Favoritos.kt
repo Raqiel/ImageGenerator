@@ -3,30 +3,63 @@ package com.example.imagegenerator.favoritos
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.imagegenerator.R
 import com.example.imagegenerator.data.RandomImage
+import com.google.android.gms.tasks.Tasks
+import com.google.firebase.database.*
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QuerySnapshot
+import com.google.firebase.firestore.auth.User
 
 class Favoritos : AppCompatActivity() {
+    private lateinit var imagensRecyclerView: RecyclerView
+    private lateinit var imagensArrayList : ArrayList<RandomImage>
+
     override fun onCreate(savedInstanceState: Bundle?) {
-
-        carregaColectionFireBase()
-
-
-
-
-        super.onCreate(savedInstanceState)
+        super.onCreate(savedInstanceState )
         setContentView(R.layout.activity_favoritos)
-        //val myDataset = DataFavoritos().loadFavoritos()
-       // val recyclerView = findViewById<RecyclerView>(R.id.recycler_view_favoritos)
-        //recyclerView.adapter = RecyclerView.Adapter(this, myDataset)
-        //recyclerView.setHasFixedSize(true)
+
+        //carregaColectionFireBase()
+
+
+        imagensRecyclerView = findViewById(R.id.recycler_view_favoritos)
+        imagensRecyclerView.layoutManager = LinearLayoutManager ( this)
+        imagensRecyclerView.setHasFixedSize(true)
+
+        imagensArrayList = arrayListOf<RandomImage>()
+        getImagesData()
+
+
     }
 
-    val imagensFavoritas = ArrayList<RandomImage> ()
-
-    fun carregaColectionFireBase() {
+    private fun getImagesData() {
+//        dbref = FirebaseDatabase.getInstance().getReference("imagens")
+//
+//        dbref.addValueEventListener(object : ValueEventListener{
+//
+//            override fun onDataChange(snapshot: DataSnapshot) {
+//
+//                if (snapshot.exists()){
+//                    for (imagem in snapshot.children){
+//
+//                      //  val image = imagemSnapshot.getValue(User::class.java)
+//
+//                         val ri = imagem.getValue(RandomImage::class.java)
+//
+//
+//                        imagensArrayList.add(ri!!)
+//                    }
+//
+//                    imagensRecyclerView.adapter = ItemAdapter(imagensArrayList)
+//                }
+//            }
+//
+//            override fun onCancelled(error: DatabaseError) {
+//                TODO("Not yet implemented")
+//            }
+//        })
 
         FirebaseFirestore.getInstance().collection("imagens").get().addOnSuccessListener{
             imagensCollection ->
@@ -37,15 +70,18 @@ class Favoritos : AppCompatActivity() {
 
     private fun trataImagem(imagensCollection: QuerySnapshot) {
         for (imagem in imagensCollection) {
-
             val ri = RandomImage()
             ri.image = imagem.data.get("url") as String?
             ri.id = imagem.id
-            imagensFavoritas.add(ri)
+            imagensArrayList.add(ri)
 
         }
-        Log.i("imagens", imagensFavoritas.size.toString())
+        imagensRecyclerView.adapter = ItemAdapter(imagensArrayList)
+        Log.i("imagens", imagensArrayList.size.toString())
     }
 
 }
+
+
+
 

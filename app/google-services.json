@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "900629864612",
+    "firebase_url": "https://gerador-de-imagens-default-rtdb.firebaseio.com",
     "project_id": "gerador-de-imagens",
     "storage_bucket": "gerador-de-imagens.appspot.com"
   },
